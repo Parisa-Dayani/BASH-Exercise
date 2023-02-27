@@ -1,0 +1,61 @@
+#!/usr/bin/bash 
+
+NUMBER=12
+INTERVAL=5
+
+help() {
+cat << EOL
+Usage: $0 [OPTIONS] COMMAND
+          -h: show this help output
+          -n: Number of tries (Default : 12)
+          -i: Interval seconds (Default : 5)
+EOL
+}
+
+if [[ $# -eq 0 ]];then
+help
+fi
+ 
+while [[ $# -ne 0 ]] ; do     
+       case $1  in 
+                -h)
+                       help
+                       exit 0
+                        ;;
+                -n)
+                       if [[ $2 == "" ]];then
+                       NUM=$NUMBER
+                       shift 2
+                       else
+                       NUM=$2
+                       shift 2
+                       fi
+                       ;;                
+                -i)
+                       if [[ $2 == "" ]];then
+                       INTERV=$INTERVAL
+                       shift 2
+                       else
+                       INTERV=$2
+                       shift 2
+                       fi
+                       ;;
+
+                *)
+                       COMMAND=$@
+                       break
+                       ;;         
+         esac
+done
+
+
+if [[ $? -ne 0 ]] ; then
+      echo "The process wasn't successfull"
+      exit 1
+fi
+
+if [[ -z $COMMAND ]] ; then
+      echo "Please enter your command"
+      exit 0
+fi
+
